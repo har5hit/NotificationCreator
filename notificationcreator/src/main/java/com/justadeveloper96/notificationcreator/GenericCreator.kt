@@ -48,27 +48,26 @@ abstract class GenericCreator:ICreator {
     val TAG = "GenericCreator"
 
     open fun getContentIntent(context: Context, data: NotificationData): Intent? {
-        return if (data.landingAction != null) {
-            val intent = Intent(actionMap()[data.landingAction!!])
-            extractExtras(data)?.getString("uri")?.let { intent.setData(Uri.parse(it)) }
+        return if (data.landingAction != null && actionMap(data.landingAction!!)!=null) {
+            val intent = Intent(actionMap(data.landingAction!!))
+            extractExtras(data)?.getString("data")?.let { intent.setData(Uri.parse(it)) }
             intent
-        } else {
-            val className = activityMap()[data.landingId]
-            return if (className != null) {
-                val intent = Intent(context, className)
-                extractExtras(data)?.let { intent.putExtras(it) }
-                intent
-            } else {
-                try {
-                    throw Exception("Landing id not available")
-                } catch (ignored: Exception) {
-                }
-                null
+        } else if (data.landingId!=null && activityMap(data.landingId!!)!=null){
+            val intent = Intent(context, activityMap(data.landingId!!))
+            extractExtras(data)?.let { intent.putExtras(it) }
+            intent
+        }else
+        {
+            try {
+                throw Exception("Landing action/id not available")
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+            null
         }
     }
 
-    abstract fun actionMap(): Map<String, String>
+    abstract fun actionMap(key: String): String?
 
 
     fun extractExtras(data: NotificationData): Bundle? {
@@ -79,8 +78,8 @@ abstract class GenericCreator:ICreator {
     private fun getContentPendingIntent(context: Context, data: NotificationData): PendingIntent? {
         val intent = getContentIntent(context, data)
         return if (intent == null) null else PendingIntent.getActivity(
-                context, Random().nextInt(), intent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+            context, Random().nextInt(), intent,
+            PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     private fun getActionsPendingIntent(
@@ -95,8 +94,8 @@ abstract class GenericCreator:ICreator {
             intent.action=action
             intent.putExtras(bundle)
             PendingIntent.getActivity(
-                    context, Random().nextInt(), intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT)
+                context, Random().nextInt(), intent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
         }
     }
 
@@ -104,19 +103,19 @@ abstract class GenericCreator:ICreator {
     private fun createBuilder(context: Context, data: NotificationData, service: NotificationManager): NotificationCompat.Builder {
         val imp = data.channelPriority
         val builder =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    // Create the NotificationChannel, but only on API 26+ because
-                    // the NotificationChannel class is new and not in the support library
-                    val channel: NotificationChannel
-                    val name = data.channelName
-                    val id = data.channelId
-                    channel = NotificationChannel(id, name, getChannelImportance(imp))
-                    // Register the channel with the system
-                    service.createNotificationChannel(channel)
-                    NotificationCompat.Builder(context, channel.id)
-                } else {
-                    NotificationCompat.Builder(context)
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // Create the NotificationChannel, but only on API 26+ because
+                // the NotificationChannel class is new and not in the support library
+                val channel: NotificationChannel
+                val name = data.channelName
+                val id = data.channelId
+                channel = NotificationChannel(id, name, getChannelImportance(imp))
+                // Register the channel with the system
+                service.createNotificationChannel(channel)
+                NotificationCompat.Builder(context, channel.id)
+            } else {
+                NotificationCompat.Builder(context)
+            }
 
         builder.priority = getNotificationImportance(data.channelPriority)
         return builder
@@ -234,25 +233,25 @@ abstract class GenericCreator:ICreator {
             }
         }
 
-    fun getNotificationImportance(importance: String): Int {
-        return when (importance) {
-            "max" -> {
-                NotificationCompat.PRIORITY_MAX
-            }
-            "high" -> {
-                NotificationCompat.PRIORITY_HIGH
-            }
-            "low" -> {
-                NotificationCompat.PRIORITY_LOW
-            }
-            "min" -> {
-                NotificationCompat.PRIORITY_MIN
-            }
-            else -> {
-                NotificationCompat.PRIORITY_DEFAULT
+        fun getNotificationImportance(importance: String): Int {
+            return when (importance) {
+                "max" -> {
+                    NotificationCompat.PRIORITY_MAX
+                }
+                "high" -> {
+                    NotificationCompat.PRIORITY_HIGH
+                }
+                "low" -> {
+                    NotificationCompat.PRIORITY_LOW
+                }
+                "min" -> {
+                    NotificationCompat.PRIORITY_MIN
+                }
+                else -> {
+                    NotificationCompat.PRIORITY_DEFAULT
+                }
             }
         }
-    }
 
     }
 
@@ -262,5 +261,5 @@ abstract class GenericCreator:ICreator {
     abstract fun getSmallIcon(data: NotificationData): Int?
 
 
-    abstract fun activityMap(): Map<String, Class<*>>
+    abstract fun activityMap(key: String): Class<*>?
 }
