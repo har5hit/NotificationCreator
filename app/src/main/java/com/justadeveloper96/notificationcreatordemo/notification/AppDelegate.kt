@@ -14,10 +14,9 @@ import com.justadeveloper96.notificationcreator.GenericCreator
 import com.justadeveloper96.notificationcreator.NotificationData
 import com.justadeveloper96.notificationcreatordemo.MainActivity
 import com.justadeveloper96.notificationcreatordemo.R
-import java.util.*
-import kotlin.collections.HashMap
 
-open class AppDelegate(val context: Context) : GenericCreator() {
+open class AppDelegate(private val context: Context) : GenericCreator() {
+
     override fun getColor(): Int? = null
 
     override fun getSound(context: Context): Uri? = null
@@ -33,26 +32,19 @@ open class AppDelegate(val context: Context) : GenericCreator() {
         else-> null
     }
 
-    override fun actionDrawableMap(type: String): Int {
-        return R.drawable.ic_launcher_foreground
-    }
+    override fun actionDrawableMap(type: String) =  R.drawable.ic_launcher_foreground
 
 
-    override fun getLargeIcon(context: Context, data: NotificationData): Bitmap? {
-        data.iconImageUrl?.let {
-            if (URLUtil.isHttpUrl(it) || URLUtil.isHttpsUrl(it)){
-                return getBitmapFromServer(it)
-            }else{
-                BitmapFactory.decodeResource(context.resources,actionDrawableMap(it))
-            }
+    override fun getLargeIcon(context: Context, data: NotificationData): Bitmap? = data.iconImageUrl?.let {
+        if (URLUtil.isHttpUrl(it) || URLUtil.isHttpsUrl(it)){
+            return getBitmapFromServer(it)
+        }else{
+            BitmapFactory.decodeResource(context.resources,actionDrawableMap(it))
         }
-
-        return null
     }
 
 
-
-    override fun getSmallIcon(data: NotificationData): Int? = R.drawable.ic_launcher_foreground
+    override fun getSmallIcon(data: NotificationData) = R.drawable.ic_launcher_foreground
 
     override fun activityMap(key:String): Class<*>? =  when(key) {
         "main" -> MainActivity::class.java
