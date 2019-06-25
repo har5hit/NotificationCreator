@@ -92,7 +92,7 @@ abstract class GenericCreator:ICreator {
         return if (intent == null) null
         else {
             intent.action=action
-            intent.putExtras(bundle)
+            bundle?.let { intent.putExtras(it) }
             PendingIntent.getActivity(
                 context, Random().nextInt(), intent,
                 PendingIntent.FLAG_UPDATE_CURRENT)

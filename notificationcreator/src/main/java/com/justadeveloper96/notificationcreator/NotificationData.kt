@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-data class NotificationData(val type: String) {
+open class NotificationData(val type: String) {
     lateinit var bundle: Bundle
     var title: String? = null
     var message: String? = null
