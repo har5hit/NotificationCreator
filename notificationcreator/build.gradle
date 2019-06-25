@@ -27,15 +27,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation deps.support.appcompat
     implementation deps.kotlin.stdlib
-
-    api deps.dagger.runtime
-    kapt deps.dagger.compiler
     implementation deps.google.gson
     implementation deps.kotlin.stdlib
 }
+
 repositories {
     mavenCentral()
 }

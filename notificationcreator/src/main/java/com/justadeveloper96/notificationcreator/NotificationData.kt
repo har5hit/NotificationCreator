@@ -30,6 +30,10 @@ data class NotificationData(val type: String) {
         }
     }
 
+    override fun toString(): String {
+        return "NotificationData(type='$type', bundle=$bundle, title=$title, message=$message, channelId='$channelId', channelName='$channelName', channelPriority='$channelPriority', iconImageUrl=$iconImageUrl, landingId=$landingId, landingAction=$landingAction, style=$style, extras=$extras, actions=$actions)"
+    }
+
 
     companion object {
 
@@ -53,6 +57,7 @@ data class NotificationData(val type: String) {
                     val tokenType = object : TypeToken<List<Action>>() {}.type
                     actions = Gson().fromJson(it, tokenType)
                 }
+                make()
             }
         }
     }

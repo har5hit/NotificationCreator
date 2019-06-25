@@ -129,7 +129,6 @@ abstract class GenericCreator:ICreator {
     open fun getSendNotificationId(data: NotificationData) = Random().nextInt()
 
     private fun buildNotification(data: NotificationData, notificationBuilder: NotificationCompat.Builder, context: Context) {
-//        notificationBuilder.setLights(-0x10000, 1000, 300)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getColor()?.let {
                 notificationBuilder.color = ContextCompat.getColor(context, it)
