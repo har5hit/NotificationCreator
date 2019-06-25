@@ -39,7 +39,7 @@ data class NotificationData(val type: String) {
 
         fun parser(data: Map<String, String>): NotificationData {
             Log.e("Notification Map", data.toString())
-            return NotificationData(data["type"] ?: "DEF").apply {
+            return NotificationData(data["type"] ?: "DEFAULT").apply {
                 title = data["title"]
                 message = data["message"]
                 channelId = data["channel_id"] ?: "Default"
