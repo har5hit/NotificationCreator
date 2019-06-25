@@ -130,13 +130,12 @@ abstract class GenericCreator:ICreator {
 
     private fun buildNotification(data: NotificationData, notificationBuilder: NotificationCompat.Builder, context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getColor()?.let {
+            getColor(data)?.let {
                 notificationBuilder.color = ContextCompat.getColor(context, it)
             }
         }
         notificationBuilder.setLights(-0x10000, 1000, 300)
-        notificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE)
-        getSound(context)?.let { notificationBuilder.setSound(it) }
+        getSound(data, context)?.let { notificationBuilder.setSound(it) }
         getContentPendingIntent(context, data)?.let { notificationBuilder.setContentIntent(it) }
         getContentTitle(data)?.let { notificationBuilder.setContentTitle(it) }
         getContentText(data)?.let { notificationBuilder.setContentText(it) }
@@ -150,10 +149,13 @@ abstract class GenericCreator:ICreator {
         getDeleteIntent(context, data)?.let { notificationBuilder.setDeleteIntent(it) }
     }
 
-    abstract fun getSound(context: Context): Uri?
+    abstract fun getSound(
+        data: NotificationData,
+        context: Context
+    ): Uri?
 
     @ColorRes
-    abstract fun getColor(): Int?
+    abstract fun getColor(data: NotificationData): Int?
 
     private fun getContentText(data: NotificationData): String? {
         return data.message?.takeIf { it.isNotBlank() }

@@ -42,12 +42,12 @@ data class NotificationData(val type: String) {
             return NotificationData(data["type"] ?: "DEFAULT").apply {
                 title = data["title"]
                 message = data["message"]
-                channelId = data["channel_id"] ?: "Default"
-                channelName = data["channel_name"] ?: "Default"
-                channelPriority = data["channel_priority"] ?: "high"
-                iconImageUrl = data["img"]
-                landingId = data["landing_id"]
-                landingAction = data["landing_action"]
+                channelId = data["channelId"] ?: "Default"
+                channelName = data["channelName"] ?: "Default"
+                channelPriority = data["channelPriority"] ?: "high"
+                iconImageUrl = data["icon"]
+                landingId = data["landingId"]
+                landingAction = data["landingAction"]
                 style = data["style"]
                 data["extras"]?.let {
                     val tokenType = object : TypeToken<Map<String, String>>() {}.type
