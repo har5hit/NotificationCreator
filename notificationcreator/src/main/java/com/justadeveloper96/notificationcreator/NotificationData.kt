@@ -15,7 +15,7 @@ open class NotificationData(val type: String) {
     lateinit var channelPriority: String
     var iconImageUrl: String? = null
     var landingId: String? = null
-    var landingAction: String? = null
+    var action: String? = null
     var style: String? = null
     var extras: MutableMap<String, String>? = null
     var actions: List<Action>? = null
@@ -31,7 +31,7 @@ open class NotificationData(val type: String) {
     }
 
     override fun toString(): String {
-        return "NotificationData(type='$type', bundle=$bundle, title=$title, message=$message, channelId='$channelId', channelName='$channelName', channelPriority='$channelPriority', iconImageUrl=$iconImageUrl, landingId=$landingId, landingAction=$landingAction, style=$style, extras=$extras, actions=$actions)"
+        return "NotificationData(type='$type', bundle=$bundle, title=$title, message=$message, channelId='$channelId', channelName='$channelName', channelPriority='$channelPriority', iconImageUrl=$iconImageUrl, landingId=$landingId, action=$action, style=$style, extras=$extras, actions=$actions)"
     }
 
 
@@ -47,7 +47,7 @@ open class NotificationData(val type: String) {
                 channelPriority = data["channelPriority"] ?: "high"
                 iconImageUrl = data["icon"]
                 landingId = data["landingId"]
-                landingAction = data["landingAction"]
+                action = data["action"]
                 style = data["style"]
                 data["extras"]?.let {
                     val tokenType = object : TypeToken<Map<String, String>>() {}.type

@@ -26,7 +26,7 @@ NotificationData
   "channelName": "Greeting",
   "channelPriority": "max",
   "landingId": "main",
-  "landingAction": "action_view",
+  "action": "android.intent.action.VIEW",
   "style": "bigPicture",
   "icon": "https://yourdomainaddress/jpgs/icon.jpg",
   "extras": {
@@ -56,9 +56,9 @@ Default value set to Default priority
 
 * <b>landingId</b> <i>(optional)</i> - The Id of the activity to be opened.
 
-* <b>landingAction</b> <i>(optional)</i> - The Id of the intent action to be opened.
+* <b>action</b> <i>(optional)</i> - The action for the intent to be opened.
 
-<i><b>Attention</b>: landingId and landingAction shouldn't be sent together. Only one of these attributes should be sent</i>
+<i><b>Attention</b>: landingId and action shouldn't be sent together. Only one of these attributes will be accepted, with landingId getting priority</i>
 
 * <b>style</b> <i>(optional)</i> - One of ("message","bigPicture").
 

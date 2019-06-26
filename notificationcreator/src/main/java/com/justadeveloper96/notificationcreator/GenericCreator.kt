@@ -48,8 +48,8 @@ abstract class GenericCreator:ICreator {
     val TAG = "GenericCreator"
 
     open fun getContentIntent(context: Context, data: NotificationData): Intent? {
-        return if (data.landingAction != null && actionMap(data.landingAction!!)!=null) {
-            val intent = Intent(actionMap(data.landingAction!!))
+        return if (data.action != null) {
+            val intent = Intent(data.action)
             extractExtras(data)?.getString("data")?.let { intent.setData(Uri.parse(it)) }
             intent
         } else if (data.landingId!=null && activityMap(data.landingId!!)!=null){
@@ -66,8 +66,6 @@ abstract class GenericCreator:ICreator {
             null
         }
     }
-
-    abstract fun actionMap(key: String): String?
 
 
     fun extractExtras(data: NotificationData): Bundle? {

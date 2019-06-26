@@ -1,7 +1,6 @@
 package com.justadeveloper96.notificationcreatordemo.notification
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -25,10 +24,6 @@ open class AppDelegate @Inject constructor(private val context: Context) : Gener
 
     private fun getBitmapFromServer(imgUrl: String) = Glide.with(context).asBitmap().load(imgUrl).submit().get()
 
-    override fun actionMap(key:String): String? = when(key) {
-        "action_view" -> Intent.ACTION_VIEW
-        else-> null
-    }
 
     override fun actionDrawableMap(type: String) =  R.drawable.ic_launcher_foreground
 
