@@ -2,6 +2,20 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+
+    userOrg = 'har5hit'
+    repoName = 'Notification'
+    groupId = 'com.justadeveloper96.android'
+    artifactId = 'notification-creator'
+    publishVersion = '1.0.0'
+    uploadName = 'NotificationCreator'
+    desc = 'Simplified creation of Android notifications directly from data sent from Server'
+    website = 'https://github.com/har5hit/NotificationCreator'
+
+}
 
 android {
     compileSdkVersion build_versions.compile_sdk
@@ -19,7 +33,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -28,7 +42,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.support.appcompat
-    implementation deps.kotlin.stdlib
     implementation deps.google.gson
     implementation deps.kotlin.stdlib
 }
