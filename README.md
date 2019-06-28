@@ -3,11 +3,11 @@
 Auto creation of Android notifications directly from data sent from Server using <b>Delegate</b> Pattern.
 
 
-# Usage
+# Description
 
 This library aims to lessen boilerplate required to create notifications by accepting a data model `NotificationData` or any derived class of it.
  
-`GenericDelegate` is a abstract class provided which handles generic notification which can be extended to make app specific modifications like `drawables`, `sound` etc 
+`GenericDelegate` is a abstract class provided which handles generic notification which can be extended to make app specific modifications. 
 
 Multiple Delegates can be created to handle different usecases and can be sent to NotificationCreationFactory instance which will handle delegation to appropriate delegate. Each delegate specify what type of payload they can handle by themselves in function `canHandle(type:String)`.
 <br>
@@ -72,10 +72,41 @@ Default value set to Default priority
     * <b>action</b> <i>(optional)</i> - Intent action of the intent created by landingId/landingAction.
     * <b>extras</b> <i>(optional)</i> - Extra Map<String,String> data for handling of notifications and to be sent as bundle to the intent created by landingId/landingAction.
 
+## Usage
+
+* Create instances of GenericCreator or ICreator.
+* Create instance of NotificationCreatorPool
+* Parse the notification to data model.
+* Send the data model and context to the pool to handle.
+
+```
+ class AppDelegate(private val context: Context) : GenericCreator(){
+ ...
+ ...
+ }
+ 
+...
+ 
+val delegate=AppDelegate(context)
+
+val delegates=listOf(delegate)
+
+val pool = NotificationCreatorPool(delegates)
+
+....
+
+remoteMessage?.data?.isNotEmpty()?.let {
+            val data=NotificationData.parser(remoteMessage.data)
+            Log.d(TAG, "data payload: " + data)
+            pool(data,applicationContext)
+        }
+```
+
 
 ## Customization
 
-Generic delegate has functions which can be Overridden to modify notification data, builder and other changes specific to usecase/delegate.
+`GenericDelegate` has functions which can be Overridden to modify notification data, builder and other changes specific to usecase/delegate.
+You can create a delegate from scratch implementing `ICreator` interface
 
 
 ## Demo

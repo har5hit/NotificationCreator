@@ -1,7 +1,7 @@
 package com.justadeveloper96.notificationcreatordemo.notification
 
 import com.justadeveloper96.notificationcreator.ICreator
-import com.justadeveloper96.notificationcreator.NotificationCreationFactory
+import com.justadeveloper96.notificationcreator.NotificationCreatorPool
 import dagger.Module
 import dagger.Provides
 
@@ -10,7 +10,7 @@ import dagger.Provides
 class FactoryModule{
 
     @Provides
-    fun provideCreatorManager(list:Set<@JvmSuppressWildcards ICreator>): NotificationCreationFactory {
-        return NotificationCreationFactory(list.toList())
+    fun provideCreatorManager(list: Set<@JvmSuppressWildcards ICreator>): NotificationCreatorPool {
+        return NotificationCreatorPool(list.toList())
     }
 }

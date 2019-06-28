@@ -3,7 +3,7 @@ package com.justadeveloper96.notificationcreatordemo.fcm
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.justadeveloper96.notificationcreator.NotificationCreationFactory
+import com.justadeveloper96.notificationcreator.NotificationCreatorPool
 import com.justadeveloper96.notificationcreator.NotificationData
 import com.justadeveloper96.notificationcreatordemo.di.Injector
 import javax.inject.Inject
@@ -12,7 +12,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     @Inject
-    lateinit var manager:NotificationCreationFactory
+    lateinit var pool: NotificationCreatorPool
 
     override fun onCreate() {
         super.onCreate()
@@ -42,7 +42,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         remoteMessage?.data?.isNotEmpty()?.let {
             val data=NotificationData.parser(remoteMessage.data)
             Log.d(TAG, "data payload: " + data)
-            manager(data,applicationContext)
+            pool(data, applicationContext)
         }
 
         // Check if message contains a notification payload.
