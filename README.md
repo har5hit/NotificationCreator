@@ -1,4 +1,4 @@
-# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=1.0.0) ](https://bintray.com/har5hit/Notification/NotificationCreator/1.0.0/link)
+# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=1.0.4) ](https://bintray.com/har5hit/Notification/NotificationCreator/1.0.4/link)
 
 Simplified creation of Android notifications directly from data sent from Server using <b>Delegate</b> Pattern.
 
@@ -7,7 +7,7 @@ Simplified creation of Android notifications directly from data sent from Server
 Add the library to app build.gradle
 
 ```
-implementation 'com.justadeveloper96.android:notification-creator:1.0.0'
+implementation 'com.justadeveloper96.android:notification-creator:1.0.4'
 ```
 
 

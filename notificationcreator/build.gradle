@@ -10,7 +10,7 @@ publish {
     repoName = 'Notification'
     groupId = 'com.justadeveloper96.android'
     artifactId = 'notification-creator'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.4'
     uploadName = 'NotificationCreator'
     desc = 'Simplified creation of Android notifications directly from data sent from Server'
     website = 'https://github.com/har5hit/NotificationCreator'
@@ -23,8 +23,8 @@ android {
     defaultConfig {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -32,8 +32,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

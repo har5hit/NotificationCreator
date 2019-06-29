@@ -37,7 +37,7 @@ dependencies {
     implementation deps.firebase.fcm
     implementation deps.dagger.runtime
     kapt deps.dagger.compiler
-    implementation 'com.justadeveloper96.android:notification-creator:1.0.0'
+    implementation 'com.justadeveloper96.android:notification-creator:1.0.4'
 }
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
 
