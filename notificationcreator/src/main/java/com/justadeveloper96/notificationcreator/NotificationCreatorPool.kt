@@ -3,7 +3,7 @@ package com.justadeveloper96.notificationcreator
 import android.content.Context
 
 
-class NotificationCreatorPool(private val creators: List<ICreator>) {
+class NotificationCreatorPool(private val creators: List<ICreator<*>>) {
 
     @Throws(NoSuchElementException::class)
     operator fun invoke(data: NotificationData, context: Context) {
@@ -16,7 +16,7 @@ class NotificationCreatorPool(private val creators: List<ICreator>) {
         }
     }
 
-    private fun getProperCreator(type: String): ICreator {
+    private fun getProperCreator(type: String): ICreator<*> {
         return creators.first { it.canHandle(type) }
     }
 }

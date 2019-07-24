@@ -18,13 +18,13 @@ import androidx.core.content.ContextCompat
 import java.util.*
 
 
-abstract class GenericCreator:ICreator {
+abstract class GenericCreator<T : NotificationData> : ICreator<T> {
 
     private fun initService(context: Context): NotificationManager {
         return context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    override fun invoke(context: Context, data: NotificationData) {
+    override fun invoke(context: Context, data: T) {
         val service = initService(context)
         val data = preModifyData(data)
         val builder = createBuilder(context, data, service)
@@ -34,20 +34,20 @@ abstract class GenericCreator:ICreator {
         sendNotification(getSendNotificationId(data), service = service, builder = builder)
     }
 
-    open fun beforeNotification(context: Context, data: NotificationData) {
+    open fun beforeNotification(context: Context, data: T) {
     }
 
-    open fun preModifyData(data: NotificationData): NotificationData {
+    open fun preModifyData(data: T): T {
         return data
     }
 
-    open fun modifyBuilder(data: NotificationData, builder: NotificationCompat.Builder) {
+    open fun modifyBuilder(data: T, builder: NotificationCompat.Builder) {
 
     }
 
     val TAG = "GenericCreator"
 
-    open fun getContentIntent(context: Context, data: NotificationData): Intent? {
+    open fun getContentIntent(context: Context, data: T): Intent? {
         return if (data.action != null) {
             val intent = Intent(data.action)
             extractExtras(data)?.getString("data")?.let { intent.setData(Uri.parse(it)) }
@@ -68,12 +68,12 @@ abstract class GenericCreator:ICreator {
     }
 
 
-    fun extractExtras(data: NotificationData): Bundle? {
+    fun extractExtras(data: T): Bundle? {
         return data.bundle
     }
 
 
-    private fun getContentPendingIntent(context: Context, data: NotificationData): PendingIntent? {
+    private fun getContentPendingIntent(context: Context, data: T): PendingIntent? {
         val intent = getContentIntent(context, data)
         return if (intent == null) null else PendingIntent.getActivity(
             context, Random().nextInt(), intent,
@@ -82,7 +82,7 @@ abstract class GenericCreator:ICreator {
 
     private fun getActionsPendingIntent(
         context: Context,
-        data: NotificationData,
+        data: T,
         bundle: Bundle?,
         action: String?
     ): PendingIntent? {
@@ -98,7 +98,7 @@ abstract class GenericCreator:ICreator {
     }
 
 
-    private fun createBuilder(context: Context, data: NotificationData, service: NotificationManager): NotificationCompat.Builder {
+    private fun createBuilder(context: Context, data: T, service: NotificationManager): NotificationCompat.Builder {
         val imp = data.channelPriority
         val builder =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -124,9 +124,9 @@ abstract class GenericCreator:ICreator {
     }
 
 
-    open fun getSendNotificationId(data: NotificationData) = Random().nextInt()
+    open fun getSendNotificationId(data: T) = Random().nextInt()
 
-    private fun buildNotification(data: NotificationData, notificationBuilder: NotificationCompat.Builder, context: Context) {
+    private fun buildNotification(data: T, notificationBuilder: NotificationCompat.Builder, context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getColor(data)?.let {
                 notificationBuilder.color = ContextCompat.getColor(context, it)
@@ -148,26 +148,26 @@ abstract class GenericCreator:ICreator {
     }
 
     abstract fun getSound(
-        data: NotificationData,
+        data: T,
         context: Context
     ): Uri?
 
     @ColorRes
-    abstract fun getColor(data: NotificationData): Int?
+    abstract fun getColor(data: T): Int?
 
-    private fun getContentText(data: NotificationData): String? {
+    private fun getContentText(data: T): String? {
         return data.message?.takeIf { it.isNotBlank() }
     }
 
-    private fun getContentTitle(data: NotificationData): String? {
+    private fun getContentTitle(data: T): String? {
         return data.title?.takeIf { it.isNotBlank() }
     }
 
-    fun getAutoCancel(data: NotificationData): Boolean? {
+    fun getAutoCancel(data: T): Boolean? {
         return true
     }
 
-    open fun getActions(context: Context, data: NotificationData): List<NotificationCompat.Action>? {
+    open fun getActions(context: Context, data: T): List<NotificationCompat.Action>? {
         val list = mutableListOf<NotificationCompat.Action>()
         extractActions(data)?.forEach {
             list.add(NotificationCompat.Action.Builder(actionDrawableMap(it.drawable), it.label, getActionsPendingIntent(context, data, it.bundle,it.action)).build())
@@ -178,18 +178,18 @@ abstract class GenericCreator:ICreator {
     @DrawableRes
     abstract fun actionDrawableMap(type: String): Int
 
-    fun extractActions(data: NotificationData): List<Action>? {
+    fun extractActions(data: T): List<Action>? {
         return data.actions
     }
 
-    fun getGroupKey(data: NotificationData): String? {
+    fun getGroupKey(data: T): String? {
         return null
     }
 
-    abstract fun getLargeIcon(context: Context, data: NotificationData): Bitmap?
+    abstract fun getLargeIcon(context: Context, data: T): Bitmap?
 
 
-    fun getStyle(data: NotificationData): NotificationCompat.Style? {
+    fun getStyle(data: T): NotificationCompat.Style? {
         when (data.style) {
             "message" -> {
                 return NotificationCompat.BigTextStyle().bigText(getContentText(data))
@@ -254,10 +254,10 @@ abstract class GenericCreator:ICreator {
 
     }
 
-    open fun getDeleteIntent(context: Context, data: NotificationData): PendingIntent? = null
+    open fun getDeleteIntent(context: Context, data: T): PendingIntent? = null
 
     @DrawableRes
-    abstract fun getSmallIcon(data: NotificationData): Int?
+    abstract fun getSmallIcon(data: T): Int?
 
 
     abstract fun activityMap(key: String): Class<*>?

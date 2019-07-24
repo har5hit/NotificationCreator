@@ -12,7 +12,7 @@ import com.justadeveloper96.notificationcreatordemo.MainActivity
 import com.justadeveloper96.notificationcreatordemo.R
 import javax.inject.Inject
 
-open class AppDelegate @Inject constructor(private val context: Context) : GenericCreator() {
+open class AppDelegate @Inject constructor(private val context: Context) : GenericCreator<NotificationData>() {
 
     override fun getColor(data: NotificationData): Int? = null
 
