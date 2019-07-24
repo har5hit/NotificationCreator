@@ -10,7 +10,7 @@ import dagger.Provides
 class FactoryModule{
 
     @Provides
-    fun provideCreatorManager(list: Set<@JvmSuppressWildcards ICreator<*>>): NotificationCreatorPool {
-        return NotificationCreatorPool(list.toList())
+    fun provideCreatorManager(set: Set<@JvmSuppressWildcards ICreator<*>>): NotificationCreatorPool {
+        return NotificationCreatorPool(set.toList())
     }
 }
