@@ -11,6 +11,7 @@ class NotificationCreatorPool(private val creators: List<ICreator<*>>) {
         try {
             return getProperCreator(type)(context, data)
         } catch (e: Exception) {
+            e.printStackTrace()
             if (e is NoSuchElementException)
                 throw CreatorNotFoundException(type)
         }

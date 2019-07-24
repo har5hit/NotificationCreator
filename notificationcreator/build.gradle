@@ -10,11 +10,10 @@ publish {
     repoName = 'Notification'
     groupId = 'com.justadeveloper96.android'
     artifactId = 'notification-creator'
-    publishVersion = '1.0.5'
+    publishVersion = '1.0.7'
     uploadName = 'NotificationCreator'
     desc = 'Simplified creation of Android notifications directly from data sent from Server'
     website = 'https://github.com/har5hit/NotificationCreator'
-
 }
 
 android {
@@ -24,7 +23,7 @@ android {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 4
-        versionName "1.0.5"
+        versionName "1.0.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

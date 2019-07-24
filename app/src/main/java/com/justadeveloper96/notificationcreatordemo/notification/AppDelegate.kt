@@ -25,7 +25,10 @@ open class AppDelegate @Inject constructor(private val context: Context) : Gener
     private fun getBitmapFromServer(imgUrl: String) = Glide.with(context).asBitmap().load(imgUrl).submit().get()
 
 
-    override fun actionDrawableMap(type: String) =  R.drawable.ic_launcher_foreground
+    override fun actionDrawableMap(type: String?) = when (type) {
+        "music" -> R.drawable.ic_music
+        else -> -1
+    }
 
 
     override fun getLargeIcon(context: Context, data: NotificationData): Bitmap? = data.iconImageUrl?.let {

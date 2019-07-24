@@ -45,7 +45,7 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
 
     }
 
-    val TAG = "GenericCreator"
+    open val TAG = "GenericCreator"
 
     open fun getContentIntent(context: Context, data: T): Intent? {
         return if (data.action != null) {
@@ -176,7 +176,7 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
     }
 
     @DrawableRes
-    abstract fun actionDrawableMap(type: String): Int
+    abstract fun actionDrawableMap(type: String?): Int
 
     fun extractActions(data: T): List<Action>? {
         return data.actions
@@ -195,7 +195,7 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
                 return NotificationCompat.BigTextStyle().bigText(getContentText(data))
             }
             "bigPicture"->{
-                data.extras?.get("bigPicture")?.let {
+                data.extras?.get("big_picture")?.let {
                     provideBitmap(it)?.let {
                         return NotificationCompat.BigPictureStyle().bigPicture(it)
                     }

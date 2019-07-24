@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-open class NotificationData(val type: String) {
+open class NotificationData(open val type: String) {
     lateinit var bundle: Bundle
     var title: String? = null
     var message: String? = null
@@ -42,11 +42,11 @@ open class NotificationData(val type: String) {
             return NotificationData(data["type"] ?: "DEFAULT").apply {
                 title = data["title"]
                 message = data["message"]
-                channelId = data["channelId"] ?: "Default"
-                channelName = data["channelName"] ?: "Default"
-                channelPriority = data["channelPriority"] ?: "high"
+                channelId = data["channel_id"] ?: "Default"
+                channelName = data["channel_name"] ?: "Default"
+                channelPriority = data["channel_priority"] ?: "high"
                 iconImageUrl = data["icon"]
-                landingId = data["landingId"]
+                landingId = data["landing_id"]
                 action = data["action"]
                 style = data["style"]
                 data["extras"]?.let {
@@ -63,7 +63,7 @@ open class NotificationData(val type: String) {
     }
 }
 
-data class Action(val label: String, val extras: Map<String, String>?, val action: String?, val drawable: String) {
+data class Action(val label: String, val extras: Map<String, String>?, val action: String?, val drawable: String?) {
     lateinit var bundle: Bundle
 
     fun make() {
