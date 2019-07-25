@@ -57,12 +57,12 @@ NotificationData
 
 * <b>message</b> <i>(optional)</i> - Message body.
 
-* <b>channelId,channelName</b> - Android channel stuff. [Notification Channels](https://developer.android.com/training/notify-user/channels)
+* <b>channel_id,channel_name</b> - Android channel stuff. [Notification Channels](https://developer.android.com/training/notify-user/channels)
  
-* <b>channelPriority</b> - Priority of message. Values one of ("max", "high", "low", "min").
+* <b>channel_priority</b> - Priority of message. Values one of ("max", "high", "low", "min").
 Default value set to Default priority
 
-* <b>landingId</b> <i>(optional)</i> - The Id of the activity to be opened.
+* <b>landing_id</b> <i>(optional)</i> - The Id of the activity to be opened.
 
 * <b>action</b> <i>(optional)</i> - The action for the intent to be opened.
 
