@@ -1,4 +1,4 @@
-# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=1.0.7) ](https://bintray.com/har5hit/Notification/NotificationCreator/1.0.7/link)
+# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=1.0.8) ](https://bintray.com/har5hit/Notification/NotificationCreator/1.0.8/link)
 
 Simplified creation of Android notifications directly from data sent from Server using <b>Delegate</b> Pattern.
 
@@ -7,7 +7,7 @@ Simplified creation of Android notifications directly from data sent from Server
 Add the library to app build.gradle
 
 ```
-implementation 'com.justadeveloper96.android:notification-creator:1.0.7'
+implementation 'com.justadeveloper96.android:notification-creator:1.0.8'
 ```
 
 
@@ -39,6 +39,11 @@ NotificationData
   "icon": "https://yourdomainaddress/jpgs/icon.jpg",
   "extras": {
     "big_picture": "https://yourdomainaddress/jpgs/abc.jpg"
+    "int":1,
+	"double":1.3,
+	"string":"abc",
+	"stringArray":["abc","xyz"],
+	"boolean":true
   },
   "actions": [
     {
@@ -72,13 +77,13 @@ Default value set to Default priority
 
 * <b>icon</b> <i>(optional)</i> - Icon of notification.
 
-* <b>extras</b> <i>(optional)</i> - Extra Map<String,String> data for handling of notifications and to be sent as bundle to the intent created by landingId/landingAction.
+* <b>extras</b> <i>(optional)</i> - Extra Map<String,Any> data for handling of notifications and to be sent as bundle to the intent created by landingId/landingAction.
 
 * <b>actions</b> <i>(optional)</i> - List of actions to be shown in notification.
     * <b>label</b> - Label shown in action.
     * <b>drawable</b> <i>(optional)</i> - resource icon for the action.
     * <b>action</b> <i>(optional)</i> - Intent action of the intent created by landingId/landingAction.
-    * <b>extras</b> <i>(optional)</i> - Extra Map<String,String> data for handling of notifications and to be sent as bundle to the intent created by landingId/landingAction.
+    * <b>extras</b> <i>(optional)</i> - Extra Map<String,Any> data for handling of notifications and to be sent as bundle to the intent created by landingId/landingAction.
 
 ## Usage
 

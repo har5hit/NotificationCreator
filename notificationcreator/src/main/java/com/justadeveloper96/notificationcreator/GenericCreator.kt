@@ -196,7 +196,7 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
             }
             "bigPicture"->{
                 data.extras?.get("big_picture")?.let {
-                    provideBitmap(it)?.let {
+                    provideBitmap(it as String)?.let {
                         return NotificationCompat.BigPictureStyle().bigPicture(it)
                     }
                     return null

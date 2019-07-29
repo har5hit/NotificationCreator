@@ -17,14 +17,11 @@ open class NotificationData(open val type: String) {
     var landingId: String? = null
     var action: String? = null
     var style: String? = null
-    var extras: MutableMap<String, String>? = null
+    var extras: MutableMap<String, Any>? = null
     var actions: List<Action>? = null
 
     fun make() {
-        bundle = Bundle()
-        extras?.forEach { (key, value) ->
-            bundle.putString(key, value)
-        }
+        bundle = extras?.toBundle() ?: Bundle()
         actions?.forEach { action ->
             action.make()
         }
@@ -50,7 +47,7 @@ open class NotificationData(open val type: String) {
                 action = data["action"]
                 style = data["style"]
                 data["extras"]?.let {
-                    val tokenType = object : TypeToken<Map<String, String>>() {}.type
+                    val tokenType = object : TypeToken<Map<String, Any>>() {}.type
                     extras = Gson().fromJson(it, tokenType)
                 }
                 data["actions"]?.let {
@@ -63,13 +60,35 @@ open class NotificationData(open val type: String) {
     }
 }
 
-data class Action(val label: String, val extras: Map<String, String>?, val action: String?, val drawable: String?) {
+data class Action(val label: String, val extras: Map<String, Any>?, val action: String?, val drawable: String?) {
     lateinit var bundle: Bundle
 
     fun make() {
-        bundle = Bundle()
-        extras?.forEach { (key, value) ->
-            bundle.putString(key, value)
+        bundle = extras?.toBundle() ?: Bundle()
+    }
+}
+
+fun Map<String, Any>.toBundle(): Bundle {
+    val bundle = Bundle()
+    forEach { (key, value) ->
+        when (value) {
+            is Boolean -> {
+                bundle.putBoolean(key, value)
+            }
+            is Double -> {
+                if ((value - value.toInt() == 0.0)) {
+                    bundle.putInt(key, value.toInt())
+                } else {
+                    bundle.putDouble(key, value)
+                }
+            }
+            is List<*> -> {
+                bundle.putStringArrayList(key, value as java.util.ArrayList<String>)
+            }
+            is String -> {
+                bundle.putString(key, value)
+            }
         }
     }
+    return bundle
 }
