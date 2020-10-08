@@ -8,7 +8,7 @@ buildscript {
         
     }
     dependencies {
-        classpath deps.android_gradle_plugin
+        classpath deps.android.plugin
         classpath deps.kotlin.plugin
         classpath deps.google.services
         classpath 'com.github.panpf.bintray-publish:bintray-publish:1.0.0'
