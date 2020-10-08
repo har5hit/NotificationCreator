@@ -6,19 +6,21 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-open class NotificationData(open val type: String) {
-    lateinit var bundle: Bundle
-    var title: String? = null
-    var message: String? = null
-    lateinit var channelId: String
-    lateinit var channelName: String
-    lateinit var channelPriority: String
-    var iconImageUrl: String? = null
-    var landingId: String? = null
-    var action: String? = null
-    var style: String? = null
-    var extras: MutableMap<String, Any>? = null
+open class NotificationData(
+    open val type: String = "DEFAULT",
+    var title: String? = null,
+    var message: String? = null,
+    var channelId: String = "Default",
+    var channelName: String = "Default",
+    var channelPriority: String = "high",
+    var iconImageUrl: String? = null,
+    var landingId: String? = null,
+    var action: String? = null,
+    var style: String? = null,
+    var extras: MutableMap<String, Any>? = null,
     var actions: List<Action>? = null
+) {
+    lateinit var bundle: Bundle
 
     fun make() {
         bundle = extras?.toBundle() ?: Bundle()
@@ -36,24 +38,24 @@ open class NotificationData(open val type: String) {
 
         fun parser(data: Map<String, String>): NotificationData {
             Log.e("Notification Map", data.toString())
-            return NotificationData(data["type"] ?: "DEFAULT").apply {
-                title = data["title"]
-                message = data["message"]
-                channelId = data["channel_id"] ?: "Default"
-                channelName = data["channel_name"] ?: "Default"
-                channelPriority = data["channel_priority"] ?: "high"
-                iconImageUrl = data["icon"]
-                landingId = data["landing_id"]
-                action = data["action"]
-                style = data["style"]
-                data["extras"]?.let {
+            return NotificationData(data["type"] ?: "DEFAULT",
+                title = data["title"],
+                message = data["message"],
+                channelId = data["channel_id"] ?: "Default",
+                channelName = data["channel_name"] ?: "Default",
+                channelPriority = data["channel_priority"] ?: "high",
+                iconImageUrl = data["icon"],
+                landingId = data["landing_id"],
+                action = data["action"],
+                style = data["style"],
+                extras = data["extras"]?.let {
                     val tokenType = object : TypeToken<Map<String, Any>>() {}.type
-                    extras = Gson().fromJson(it, tokenType)
-                }
-                data["actions"]?.let {
+                    return Gson().fromJson(it, tokenType)
+                },
+                actions = data["actions"]?.let {
                     val tokenType = object : TypeToken<List<Action>>() {}.type
-                    actions = Gson().fromJson(it, tokenType)
-                }
+                    return Gson().fromJson(it, tokenType)
+                }).apply {
                 make()
             }
         }

@@ -41,7 +41,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Check if message contains a data payload.
         remoteMessage?.data?.isNotEmpty()?.let {
             val data=NotificationData.parser(remoteMessage.data)
-            Log.d(TAG, "data payload: " + data)
+            Log.d(TAG, "data payload: $data")
             pool(data, applicationContext)
         }
 

@@ -1,5 +1,6 @@
 package com.justadeveloper96.notificationcreatordemo.di
 
+import com.justadeveloper96.notificationcreatordemo.MainActivity
 import com.justadeveloper96.notificationcreatordemo.fcm.MyFirebaseMessagingService
 import com.justadeveloper96.notificationcreatordemo.notification.CreatorsModule
 import com.justadeveloper96.notificationcreatordemo.notification.FactoryModule
@@ -10,4 +11,5 @@ import dagger.Component
 interface AppComponent{
 
     fun inject(service: MyFirebaseMessagingService)
+    fun inject(activity: MainActivity)
 }
