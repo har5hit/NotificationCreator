@@ -8,17 +8,17 @@ import com.google.gson.reflect.TypeToken
 
 open class NotificationData(
     open val type: String = "DEFAULT",
-    var title: String? = null,
-    var message: String? = null,
-    var channelId: String = "Default",
-    var channelName: String = "Default",
-    var channelPriority: String = "high",
-    var iconImageUrl: String? = null,
-    var landingId: String? = null,
-    var action: String? = null,
-    var style: String? = null,
-    var extras: MutableMap<String, Any>? = null,
-    var actions: List<Action>? = null
+    open var title: String? = null,
+    open var message: String? = null,
+    open var channelId: String = "Default",
+    open var channelName: String = "Default",
+    open var channelPriority: String = "high",
+    open var iconImageUrl: String? = null,
+    open var landingId: String? = null,
+    open var action: String? = null,
+    open var style: String? = null,
+    open var extras: MutableMap<String, Any>? = null,
+    open var actions: List<Action>? = null
 ) {
     lateinit var bundle: Bundle
 
@@ -28,11 +28,6 @@ open class NotificationData(
             action.make()
         }
     }
-
-    override fun toString(): String {
-        return "NotificationData(type='$type', bundle=$bundle, title=$title, message=$message, channelId='$channelId', channelName='$channelName', channelPriority='$channelPriority', iconImageUrl=$iconImageUrl, landingId=$landingId, action=$action, style=$style, extras=$extras, actions=$actions)"
-    }
-
 
     companion object {
 
