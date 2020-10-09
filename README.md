@@ -1,4 +1,4 @@
-# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=1.0.8) ](https://bintray.com/har5hit/Notification/NotificationCreator/1.0.8/link)
+# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=2.0.0) ](https://bintray.com/har5hit/Notification/NotificationCreator/1.0.8/link)
 
 Simplified creation of Android notifications directly from data sent from Server using <b>Delegate</b> Pattern.
 
@@ -7,7 +7,7 @@ Simplified creation of Android notifications directly from data sent from Server
 Add the library to app build.gradle
 
 ```
-implementation 'com.justadeveloper96.android:notification-creator:1.0.8'
+implementation 'com.justadeveloper96.android:notification-creator:2.0.0'
 ```
 
 
@@ -27,30 +27,37 @@ Refer AppDelegate class in Demo app for sample.
 ```
 NotificationData
 {
-  "type":"Generic"
+  "type": "Generic",
   "title": "Test Message",
   "message": "Hello How are you",
-  "channel_id": "greeting",
-  "channel_name": "Greeting",
-  "channel_priority": "max",
-  "landing_id": "main",
+  "channelId": "greeting",
+  "channelName": "Greeting",
+  "channelPriority": "max",
+  "landingId": "main",
   "action": "android.intent.action.VIEW",
-  "style": "bigPicture",
+  "style": "BIG_PICTURE",
   "icon": "https://yourdomainaddress/jpgs/icon.jpg",
+  "bigPictureStyle": {
+    "bigPicture": "https://yourdomainaddress/jpgs/abc.jpg"
+  },
   "extras": {
-    "big_picture": "https://yourdomainaddress/jpgs/abc.jpg"
-    "int":1,
-	"double":1.3,
-	"string":"abc",
-	"stringArray":["abc","xyz"],
-	"boolean":true
+    "int": 1,
+    "double": 1.3,
+    "string": "abc",
+    "stringArray": [
+      "abc",
+      "xyz"
+    ],
+    "boolean": true
   },
   "actions": [
     {
       "label": "View",
       "drawable": "ic_music",
       "action": "view",
-      "extras": {}
+      "extras": {
+        
+      }
     }
   ]
 }
@@ -62,12 +69,12 @@ NotificationData
 
 * <b>message</b> <i>(optional)</i> - Message body.
 
-* <b>channel_id,channel_name</b> - Android channel stuff. [Notification Channels](https://developer.android.com/training/notify-user/channels)
+* <b>channelId,channelName</b> - Android channel stuff. [Notification Channels](https://developer.android.com/training/notify-user/channels)
  
-* <b>channel_priority</b> - Priority of message. Values one of ("max", "high", "low", "min").
+* <b>channelPriority</b> - Priority of message. Values one of ("max", "high", "low", "min").
 Default value set to Default priority
 
-* <b>landing_id</b> <i>(optional)</i> - The Id of the activity to be opened.
+* <b>landingId</b> <i>(optional)</i> - The Id of the activity to be opened.
 
 * <b>action</b> <i>(optional)</i> - The action for the intent to be opened.
 
