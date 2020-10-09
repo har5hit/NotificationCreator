@@ -13,5 +13,17 @@
             android:id="@+id/btn_simple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Push Simple Notification" />
+            android:text="Simple Notification" />
+
+    <Button
+            android:id="@+id/btn_inbox_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inbox Style Notification" />
+
+    <Button
+            android:id="@+id/btn_bigpicture_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Big Picture Notification" />
 </LinearLayout>

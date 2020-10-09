@@ -16,9 +16,13 @@ open class NotificationData(
     open var iconImageUrl: String? = null,
     open var landingId: String? = null,
     open var action: String? = null,
-    open var style: String? = null,
+    open var style: Style? = null,
     open var extras: MutableMap<String, Any>? = null,
-    open var actions: List<Action>? = null
+    open var actions: List<Action>? = null,
+    open var groupSummary: Boolean? = null,
+    open var groupKey: String? = null,
+    open var inboxStyle: InboxStyle? = null,
+    open var bigPictureStyle: BigPictureStyle? = null
 ) {
     lateinit var bundle: Bundle
 
@@ -36,13 +40,19 @@ open class NotificationData(
             return NotificationData(data["type"] ?: "DEFAULT",
                 title = data["title"],
                 message = data["message"],
-                channelId = data["channel_id"] ?: "Default",
-                channelName = data["channel_name"] ?: "Default",
-                channelPriority = data["channel_priority"] ?: "high",
+                channelId = data["channelId"] ?: "Default",
+                channelName = data["channelName"] ?: "Default",
+                channelPriority = data["channelPriority"] ?: "high",
                 iconImageUrl = data["icon"],
-                landingId = data["landing_id"],
+                landingId = data["landingId"],
                 action = data["action"],
-                style = data["style"],
+                style = data["style"]?.let {
+                    try {
+                        Style.valueOf(it)
+                    } catch (e: Exception) {
+                        null
+                    }
+                },
                 extras = data["extras"]?.let {
                     val tokenType = object : TypeToken<Map<String, Any>>() {}.type
                     return Gson().fromJson(it, tokenType)
@@ -50,20 +60,39 @@ open class NotificationData(
                 actions = data["actions"]?.let {
                     val tokenType = object : TypeToken<List<Action>>() {}.type
                     return Gson().fromJson(it, tokenType)
-                }).apply {
+                },
+                groupSummary = data["groupSummary"]?.toBoolean(),
+                groupKey = data["groupKey"],
+                inboxStyle = data["inboxStyle"]?.let {
+                    Gson().fromJson(it, InboxStyle::class.java)
+                },
+                bigPictureStyle = data["bigPictureStyle"]?.let {
+                    Gson().fromJson(it, BigPictureStyle::class.java)
+                }
+            ).apply {
                 make()
             }
         }
     }
 }
 
-data class Action(val label: String, val extras: Map<String, Any>?, val action: String?, val drawable: String?) {
+enum class Style { MESSAGE, BIG_PICTURE, INBOX }
+
+data class Action(
+    val label: String,
+    val extras: Map<String, Any>?,
+    val action: String?,
+    val drawable: String?
+) {
     lateinit var bundle: Bundle
 
     fun make() {
         bundle = extras?.toBundle() ?: Bundle()
     }
 }
+
+data class InboxStyle(val lines: List<String>? = null, val summaryText: String? = null)
+data class BigPictureStyle(val bigPicture: String? = null)
 
 fun Map<String, Any>.toBundle(): Bundle {
     val bundle = Bundle()

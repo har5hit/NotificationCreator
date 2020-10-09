@@ -36,6 +36,14 @@ class MainActivity : AppCompatActivity() {
         btn_simple.setOnClickListener {
             pool.invoke(SamplePayloads.simple(), this)
         }
+
+        btn_inbox_style.setOnClickListener {
+            pool.invoke(SamplePayloads.inboxStyle(), this)
+        }
+
+        btn_bigpicture_style.setOnClickListener {
+            pool.invoke(SamplePayloads.bigPictureStyle(), this)
+        }
     }
 
 }

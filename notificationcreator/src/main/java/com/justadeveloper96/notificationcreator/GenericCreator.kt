@@ -143,6 +143,7 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
         getStyle(data)?.let { notificationBuilder.setStyle(it) }
         getLargeIcon(context, data)?.let { notificationBuilder.setLargeIcon(it) }
         getGroupKey(data)?.let { notificationBuilder.setGroup(it) }
+        getGroupSummary(data)?.let { notificationBuilder.setGroupSummary(it) }
         getActions(context, data)?.forEach { notificationBuilder.addAction(it) }
         getDeleteIntent(context, data)?.let { notificationBuilder.setDeleteIntent(it) }
     }
@@ -183,27 +184,34 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
     }
 
     fun getGroupKey(data: T): String? {
-        return null
+        return data.groupKey
+    }
+
+    fun getGroupSummary(data: T): Boolean? {
+        return data.groupSummary
     }
 
     abstract fun getLargeIcon(context: Context, data: T): Bitmap?
 
 
     fun getStyle(data: T): NotificationCompat.Style? {
-        when (data.style) {
-            "message" -> {
-                return NotificationCompat.BigTextStyle().bigText(getContentText(data))
-            }
-            "bigPicture"->{
-                data.extras?.get("big_picture")?.let {
-                    provideBitmap(it as String)?.let {
-                        return NotificationCompat.BigPictureStyle().bigPicture(it)
+        return when (data.style) {
+            Style.MESSAGE -> NotificationCompat.BigTextStyle().bigText(getContentText(data))
+            Style.BIG_PICTURE -> {
+                data.bigPictureStyle?.bigPicture?.let {
+                    provideBitmap(it)?.let {
+                        NotificationCompat.BigPictureStyle().bigPicture(it)
                     }
-                    return null
                 }
-                return null
             }
-            else -> return null
+            Style.INBOX -> {
+                val style = NotificationCompat.InboxStyle()
+                data.inboxStyle?.lines?.forEach {
+                    style.addLine(it)
+                }
+                style.setSummaryText(data.inboxStyle?.summaryText)
+            }
+            else -> null
         }
     }
 
