@@ -146,6 +146,11 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
         getGroupSummary(data)?.let { notificationBuilder.setGroupSummary(it) }
         getActions(context, data)?.forEach { notificationBuilder.addAction(it) }
         getDeleteIntent(context, data)?.let { notificationBuilder.setDeleteIntent(it) }
+        getOnlyAlertOnce(context, data)?.let { notificationBuilder.setOnlyAlertOnce(it) }
+    }
+
+    private fun getOnlyAlertOnce(context: Context, data: T): Boolean? {
+        return data.onlyAlertOnce
     }
 
     abstract fun getSound(

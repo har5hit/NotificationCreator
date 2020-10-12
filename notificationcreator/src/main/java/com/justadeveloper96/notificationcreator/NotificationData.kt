@@ -23,7 +23,8 @@ open class NotificationData(
     open var groupSummary: Boolean? = null,
     open var groupKey: String? = null,
     open var inboxStyle: InboxStyle? = null,
-    open var bigPictureStyle: BigPictureStyle? = null
+    open var bigPictureStyle: BigPictureStyle? = null,
+    open var onlyAlertOnce: Boolean? = null
 ) {
     lateinit var bundle: Bundle
 
@@ -69,7 +70,8 @@ open class NotificationData(
                 },
                 bigPictureStyle = data["bigPictureStyle"]?.let {
                     Gson().fromJson(it, BigPictureStyle::class.java)
-                }
+                },
+                onlyAlertOnce = data["onlyAlertOnce"]?.toBoolean()
             ).apply {
                 make()
             }
