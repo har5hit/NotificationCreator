@@ -3,6 +3,7 @@ package com.justadeveloper96.notificationcreator
 import android.os.Bundle
 import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 
 
@@ -79,9 +80,13 @@ open class NotificationData(
 enum class Style { MESSAGE, BIG_PICTURE, INBOX }
 
 data class Action(
+    @SerializedName("label")
     val label: String,
+    @SerializedName("extras")
     val extras: Map<String, Any>?,
+    @SerializedName("action")
     val action: String?,
+    @SerializedName("drawable")
     val drawable: String?
 ) {
     lateinit var bundle: Bundle
@@ -91,8 +96,12 @@ data class Action(
     }
 }
 
-data class InboxStyle(val lines: List<String>? = null, val summaryText: String? = null)
-data class BigPictureStyle(val bigPicture: String? = null)
+data class InboxStyle(
+    @SerializedName("lines") val lines: List<String>? = null,
+    @SerializedName("summaryText") val summaryText: String? = null
+)
+
+data class BigPictureStyle(@SerializedName("bigPicture") val bigPicture: String? = null)
 
 fun Map<String, Any>.toBundle(): Bundle {
     val bundle = Bundle()
