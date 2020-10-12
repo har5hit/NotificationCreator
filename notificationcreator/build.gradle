@@ -16,6 +16,7 @@ publish {
     website = 'https://github.com/har5hit/NotificationCreator'
     bintrayUser = ''
     bintrayKey = ''
+    dryRun = false
 }
 
 android {
