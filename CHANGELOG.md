@@ -20,8 +20,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Style values changed
 - Big Picture style data changes
 
-## [2.0.1] - 2020-12-09
+## [2.0.1] - 2020-10-09
 
 ### Added
 
 - onlyAlertOnce flag added
+
+## [2.0.2] - 2020-10-14
+
+### Added
+
+- Added check for Integer data in extras

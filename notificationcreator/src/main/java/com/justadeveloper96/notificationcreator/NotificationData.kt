@@ -125,6 +125,9 @@ fun Map<String, Any>.toBundle(): Bundle {
             is String -> {
                 bundle.putString(key, value)
             }
+            is Int -> {
+                bundle.putInt(key, value)
+            }
         }
     }
     return bundle

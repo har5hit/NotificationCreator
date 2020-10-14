@@ -33,6 +33,10 @@ object SamplePayloads {
             iconImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a6/Pok%C3%A9mon_Pikachu_art.png",
             bigPictureStyle = BigPictureStyle(
                 "https://upload.wikimedia.org/wikipedia/en/a/a6/Pok%C3%A9mon_Pikachu_art.png"
+            ),
+            extras = mutableMapOf(
+                "int" to 5,
+                "double" to 5.2
             )
         ).apply {
             make()
