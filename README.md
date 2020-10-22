@@ -1,4 +1,4 @@
-# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=2.0.2) ](https://bintray.com/har5hit/Notification/NotificationCreator/2.0.2/link)
+# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=2.0.3) ](https://bintray.com/har5hit/Notification/NotificationCreator/2.0.3/link)
 
 Simplified creation of Android notifications directly from data sent from Server using <b>Delegate</b> Pattern.
 
@@ -7,7 +7,7 @@ Simplified creation of Android notifications directly from data sent from Server
 Add the library to app build.gradle
 
 ```
-implementation 'com.justadeveloper96.android:notification-creator:2.0.2'
+implementation 'com.justadeveloper96.android:notification-creator:2.0.3'
 ```
 
 
@@ -80,7 +80,7 @@ Default value set to Default priority
 
 <i><b>Attention</b>: landingId and action shouldn't be sent together. Only one of these attributes will be accepted, with landingId getting priority</i>
 
-* <b>style</b> <i>(optional)</i> - One of ("message","bigPicture").
+* <b>style</b> <i>(optional)</i> - One of ("MESSAGE","BIG_PICTURE").
 
 * <b>icon</b> <i>(optional)</i> - Icon of notification.
 

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.google.gson.reflect.TypeToken
 
 
 open class NotificationData(
@@ -56,20 +55,18 @@ open class NotificationData(
                     }
                 },
                 extras = data["extras"]?.let {
-                    val tokenType = object : TypeToken<Map<String, Any>>() {}.type
-                    return Gson().fromJson(it, tokenType)
+                    Gson().fromJson<MutableMap<String, Any>>(it)
                 },
                 actions = data["actions"]?.let {
-                    val tokenType = object : TypeToken<List<Action>>() {}.type
-                    return Gson().fromJson(it, tokenType)
+                    Gson().fromJson<List<Action>>(it)
                 },
                 groupSummary = data["groupSummary"]?.toBoolean(),
                 groupKey = data["groupKey"],
                 inboxStyle = data["inboxStyle"]?.let {
-                    Gson().fromJson(it, InboxStyle::class.java)
+                    Gson().fromJson<InboxStyle>(it)
                 },
                 bigPictureStyle = data["bigPictureStyle"]?.let {
-                    Gson().fromJson(it, BigPictureStyle::class.java)
+                    Gson().fromJson<BigPictureStyle>(it)
                 },
                 onlyAlertOnce = data["onlyAlertOnce"]?.toBoolean()
             ).apply {

@@ -31,3 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added check for Integer data in extras
+
+## [2.0.3] - 2020-10-22
+
+### Changed
+
+- Parsing fixes
