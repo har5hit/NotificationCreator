@@ -43,3 +43,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Chaning Style Enum to String for extensibility
+
+## [2.0.5] - 2020-11-30
+
+### Changed
+
+- opening functions for overriding

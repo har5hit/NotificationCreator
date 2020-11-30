@@ -68,19 +68,20 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
     }
 
 
-    fun extractExtras(data: T): Bundle? {
+    open fun extractExtras(data: T): Bundle? {
         return data.bundle
     }
 
 
-    private fun getContentPendingIntent(context: Context, data: T): PendingIntent? {
+    open fun getContentPendingIntent(context: Context, data: T): PendingIntent? {
         val intent = getContentIntent(context, data)
         return if (intent == null) null else PendingIntent.getActivity(
             context, Random().nextInt(), intent,
-            PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
-    private fun getActionsPendingIntent(
+    open fun getActionsPendingIntent(
         context: Context,
         data: T,
         bundle: Bundle?,
@@ -89,7 +90,7 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
         val intent = getContentIntent(context, data)
         return if (intent == null) null
         else {
-            intent.action=action
+            intent.action = action
             bundle?.let { intent.putExtras(it) }
             PendingIntent.getActivity(
                 context, Random().nextInt(), intent,
@@ -98,7 +99,11 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
     }
 
 
-    private fun createBuilder(context: Context, data: T, service: NotificationManager): NotificationCompat.Builder {
+    open fun createBuilder(
+        context: Context,
+        data: T,
+        service: NotificationManager
+    ): NotificationCompat.Builder {
         val imp = data.channelPriority
         val builder =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -149,7 +154,7 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
         getOnlyAlertOnce(context, data)?.let { notificationBuilder.setOnlyAlertOnce(it) }
     }
 
-    private fun getOnlyAlertOnce(context: Context, data: T): Boolean? {
+    open fun getOnlyAlertOnce(context: Context, data: T): Boolean? {
         return data.onlyAlertOnce
     }
 
@@ -161,15 +166,15 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
     @ColorRes
     abstract fun getColor(data: T): Int?
 
-    private fun getContentText(data: T): String? {
+    open fun getContentText(data: T): String? {
         return data.message?.takeIf { it.isNotBlank() }
     }
 
-    private fun getContentTitle(data: T): String? {
+    open fun getContentTitle(data: T): String? {
         return data.title?.takeIf { it.isNotBlank() }
     }
 
-    fun getAutoCancel(data: T): Boolean? {
+    open fun getAutoCancel(data: T): Boolean? {
         return true
     }
 
@@ -184,22 +189,22 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
     @DrawableRes
     abstract fun actionDrawableMap(type: String?): Int
 
-    fun extractActions(data: T): List<Action>? {
+    open fun extractActions(data: T): List<Action>? {
         return data.actions
     }
 
-    fun getGroupKey(data: T): String? {
+    open fun getGroupKey(data: T): String? {
         return data.groupKey
     }
 
-    fun getGroupSummary(data: T): Boolean? {
+    open fun getGroupSummary(data: T): Boolean? {
         return data.groupSummary
     }
 
     abstract fun getLargeIcon(context: Context, data: T): Bitmap?
 
 
-    fun getStyle(data: T): NotificationCompat.Style? {
+    open fun getStyle(data: T): NotificationCompat.Style? {
         val styleName = data.style?.toUpperCase()
         return when (styleName) {
             "MESSAGE" -> NotificationCompat.BigTextStyle().bigText(getContentText(data))
