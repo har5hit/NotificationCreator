@@ -1,4 +1,4 @@
-# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=2.0.3) ](https://bintray.com/har5hit/Notification/NotificationCreator/2.0.3/link)
+# NotificationCreator [ ![Download](https://api.bintray.com/packages/har5hit/Notification/NotificationCreator/images/download.svg?version=2.0.4) ](https://bintray.com/har5hit/Notification/NotificationCreator/2.0.3/link)
 
 Simplified creation of Android notifications directly from data sent from Server using <b>Delegate</b> Pattern.
 

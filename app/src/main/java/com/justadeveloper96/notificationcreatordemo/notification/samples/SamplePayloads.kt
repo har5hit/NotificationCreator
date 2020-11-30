@@ -3,7 +3,6 @@ package com.justadeveloper96.notificationcreatordemo.notification.samples
 import com.justadeveloper96.notificationcreator.BigPictureStyle
 import com.justadeveloper96.notificationcreator.InboxStyle
 import com.justadeveloper96.notificationcreator.NotificationData
-import com.justadeveloper96.notificationcreator.Style
 
 object SamplePayloads {
 
@@ -16,7 +15,7 @@ object SamplePayloads {
     fun inboxStyle(): NotificationData {
         return NotificationData(
             title = "Hey", message = "How are you!",
-            style = Style.INBOX,
+            style = "INBOX",
             inboxStyle = InboxStyle(
                 lines = listOf("Lunch", "Dinner"),
                 summaryText = "Want to eat?"
@@ -29,7 +28,7 @@ object SamplePayloads {
     fun bigPictureStyle(): NotificationData {
         return NotificationData(
             title = "Hey", message = "How are you!",
-            style = Style.BIG_PICTURE,
+            style = "BIG_PICTURE",
             iconImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a6/Pok%C3%A9mon_Pikachu_art.png",
             bigPictureStyle = BigPictureStyle(
                 "https://upload.wikimedia.org/wikipedia/en/a/a6/Pok%C3%A9mon_Pikachu_art.png"

@@ -200,16 +200,17 @@ abstract class GenericCreator<T : NotificationData> : ICreator<T> {
 
 
     fun getStyle(data: T): NotificationCompat.Style? {
-        return when (data.style) {
-            Style.MESSAGE -> NotificationCompat.BigTextStyle().bigText(getContentText(data))
-            Style.BIG_PICTURE -> {
+        val styleName = data.style?.toUpperCase()
+        return when (styleName) {
+            "MESSAGE" -> NotificationCompat.BigTextStyle().bigText(getContentText(data))
+            "BIG_PICTURE" -> {
                 data.bigPictureStyle?.bigPicture?.let {
                     provideBitmap(it)?.let {
                         NotificationCompat.BigPictureStyle().bigPicture(it)
                     }
                 }
             }
-            Style.INBOX -> {
+            "INBOX" -> {
                 val style = NotificationCompat.InboxStyle()
                 data.inboxStyle?.lines?.forEach {
                     style.addLine(it)

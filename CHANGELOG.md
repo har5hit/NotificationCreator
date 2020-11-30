@@ -37,3 +37,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Parsing fixes
+
+## [2.0.4] - 2020-11-30
+
+### Changed
+
+- Chaning Style Enum to String for extensibility

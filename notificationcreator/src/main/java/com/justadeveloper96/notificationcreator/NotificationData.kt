@@ -16,7 +16,7 @@ open class NotificationData(
     open var iconImageUrl: String? = null,
     open var landingId: String? = null,
     open var action: String? = null,
-    open var style: Style? = null,
+    open var style: String? = null,
     open var extras: MutableMap<String, Any>? = null,
     open var actions: List<Action>? = null,
     open var groupSummary: Boolean? = null,
@@ -38,7 +38,8 @@ open class NotificationData(
 
         fun parser(data: Map<String, String>): NotificationData {
             Log.e("Notification Map", data.toString())
-            return NotificationData(data["type"] ?: "DEFAULT",
+            return NotificationData(
+                data["type"] ?: "DEFAULT",
                 title = data["title"],
                 message = data["message"],
                 channelId = data["channelId"] ?: "Default",
@@ -47,13 +48,7 @@ open class NotificationData(
                 iconImageUrl = data["icon"],
                 landingId = data["landingId"],
                 action = data["action"],
-                style = data["style"]?.let {
-                    try {
-                        Style.valueOf(it)
-                    } catch (e: Exception) {
-                        null
-                    }
-                },
+                style = data["style"],
                 extras = data["extras"]?.let {
                     Gson().fromJson<MutableMap<String, Any>>(it)
                 },
@@ -76,7 +71,6 @@ open class NotificationData(
     }
 }
 
-enum class Style { MESSAGE, BIG_PICTURE, INBOX }
 
 data class Action(
     @SerializedName("label")
